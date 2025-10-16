@@ -1,0 +1,48 @@
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+	
+
+
+
+	<xpath expr="//div[@id='informations']" position="after">
+            <div style="font-family: Arial, sans-serif;">
+
+                <!-- SUBJECT (Centered & Bold) -->
+                <p style="text-align: center; font-weight: bold; margin-top: 45px;">
+                    <span t-field="doc.subject"/>
+                </p>
+
+                <!-- Intro Paragraph -->
+                <p style="text-align: left; margin-top: 60px;">
+                    Dear Sir,<br/>
+                    In response to your inquiries on the above subjects, we are pleased to send you our quotations<br/>
+                    as follows:
+                </p>
+
+            </div>
+        </xpath>
+
+
+        <xpath expr="//div[@class='page']" position="after">
+            <!-- Add your custom content here -->
+            <div class="custom_report_section">
+        			 <p style="text-align: left;">
+                Thank you for your kind attention and cooperation. Should you have any queries please feel<br/>
+                free to contact us.
+            </p>
+		
+
+
+	     </div>
+		<div style="page-break-inside: avoid; padding-top: 20px;">
+    <span t-field="doc.company_id.city"/>,
+    <span t-field="doc.date_order" t-options='{"format":"MMMM dd, yyyy"}'/><br/><br/><br/><br/><br/><br/><br/>
+    
+    <span t-field="doc.user_id.name" style="text-decoration: underline; font-weight: bold;"/><br/>
+    <span style="font-weight: bold;">Business Consultant</span>
+</div>
+
+        </xpath>
+    </template>
+</odoo>
+

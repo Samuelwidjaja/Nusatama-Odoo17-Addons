@@ -1,0 +1,52 @@
+<odoo>
+    <template id="report_purchaseorder_document_inherit" inherit_id="purchase.report_purchaseorder_document">
+        <!-- Add 'Part Number' column in the header before the 'Description' column -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/thead//th[@name='th_description']" position="before">
+            <th name="th_default_code" class="text-center">
+                <strong>Part Number</strong>
+            </th>
+        </xpath>
+
+        <!-- Add 'Part Number' data in the body before the 'Description' column -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/tbody//td[@id='product']" position="before">
+            <td class="text-left">
+                <span t-field="line.product_id.default_code"/>
+            </td>
+        </xpath>
+
+                <!-- Remove 'Taxes' column from the header -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/thead//th[@name='th_taxes']" position="replace"/>
+
+        <!-- Remove 'Date Req.' column from the header -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/thead//th[@name='th_date_req']" position="replace"/>
+
+        <!-- Remove 'Date Planned' data from the body -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/tbody//span[@t-field='line.date_planned']/ancestor::td" position="replace"/>
+
+        <!-- Remove 'Taxes' data from the body -->
+        <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']/tbody//td[@name='td_taxes']" position="replace"/>
+
+	<!-- Add 'Expected Delivery' after 'Order Date' -->
+         <xpath expr="//div[@class='page']//div[@id='informations']//div[@t-elif='o.date_order']" position="after">
+            <div t-if="o.date_planned" class="col-3 bm-2">
+                <strong>Expected Delivery:</strong>
+                <p t-field="o.date_planned" class="m-0"/>
+            </div>
+        </xpath>
+        
+<!-- Add 'signature' -->
+<xpath expr="//div[@class='page']" position="after">
+    <div class="custom_report_section" style="font-weight: bold; page-break-inside: avoid; padding-top: 20px;">
+
+        <span t-field="o.company_id.city"/>,
+        <span t-field="o.date_order" t-options='{"format":"MMMM,dd yyyy"}'/><br/><br/><br/><br/><br/>
+
+        <span t-field="o.user_id.name" style="text-decoration: underline; font-weight: bold;"/><br/>
+        <span style="font-weight: bold;">Executive Director</span>
+
+    </div>
+</xpath>
+
+
+    </template>
+</odoo>

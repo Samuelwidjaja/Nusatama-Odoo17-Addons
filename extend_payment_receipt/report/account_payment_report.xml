@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<data>
+ 
+    <!-- Template for Custom invoice/vendorbill -->
+    <template id="report_account_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+		<div class="header" style="width:100% ">
+			<div class="image" style="float:left; width:100%; height:20%; display:inline-block; border-bottom: 1px solid #000; width: 100%; box-shadow: 0 2px 2px -2px gray;">
+			 <img t-att-src="'/extend_payment_receipt/static/image/header.png'" style="width:30%; display:inline-block;"/>
+			</div>
+		</div>
+		
+		<div style="100%">
+			<div style="float:left; width:60%;">
+				<table>
+				<tr>
+				<td>
+				<h3>Payment Voucher</h3>
+				</td>			
+				</tr>
+				<tr>
+				<td>
+				<span style="font-weight:bold" t-field="o.name"></span>
+				</td>
+				</tr>
+
+				</table>
+			</div>
+
+			<div style="float:right width:40%; min-height: 100px; border: 1px solid #ddd; padding: 10px;">
+				<table>           
+                                    <t t-set="contact" t-value="o.partner_id.parent_id" t-if="o.partner_id.parent_id"/>
+                                    <t t-set="contact" t-value="o.partner_id" t-if="not o.partner_id.parent_id"/>
+                                <tr>    <td> <span t-field="contact.name" /><br/>
+                                        <span t-field="contact.street"/><br/>
+                                        <span t-field="contact.city"/>
+                                    </td>
+                                </tr>
+				</table>
+	
+
+			</div>
+
+		</div>
+
+		<div class="oe_structure"/>
+                        <div id="informations" class="row mt-3 mb-1">
+  				 <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.date" name="date" >
+                                <strong>Date:</strong><br/>
+                                <span t-field="o.date"></span>
+                            </div>
+			   
+        
+             			 <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.ref" name="reference">
+                                <strong>Reference:</strong><br/>
+                                <span t-field="o.ref"></span>
+                           	 </div>
+				
+		
+				<div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.sbu_jurnal" name="sbu_jurnal">
+                                <strong>SBU:</strong><br/>
+                                <span t-field="o.sbu_jurnal"></span>
+                           	 </div>
+                       		 
+			</div>
+		
+                <div class="page">	
+			<br/>
+                    
+                    <table class="table table-sm" style="width: 100%;">
+                        <thead>
+			
+                            <tr>
+                                <th style="width: 60%; text-align:left;">Description</th>
+                                <th style="width: 20%;" class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic content will go here -->
+			<t t-foreach="o.invoice_line_ids" t-as="line">
+			<tr>
+			<td style="padding:5px;"><span t-esc="line.name"/></td>
+			<td style=" padding:5px;" align="right"><span t-esc="'{0:,.2f}'.format(line.price_subtotal)"/></td>
+			
+			</tr>	</t>
+			<tr>
+                                <td style="padding: 10px;" align="right"><strong>TOTAL</strong></td>
+                          <td style="padding: 10px; font-weight:bold;" align="right"><span t-field="o.amount_total"/></td>
+                            </tr>
+			
+                        </tbody>
+                    </table>
+
+                </div>
+		
+		<div class="signature">
+		<table style="border-collapse: collapse; width: 100%;">
+		<tr style="font-weight:bold; text-align:center;">
+		 <td style="border: 1px solid black; padding: 5px;">Prepared By</td>
+		 <td style="border: 1px solid black; padding: 5px;">Aproved By</td>
+		 <td style="border: 1px solid black; padding: 5px;">Checked By</td>
+		 <td style="border: 1px solid black; padding: 5px;">Received By</td>
+		</tr>
+		<tr>
+		<td style="height:100px; border: 1px solid black;"></td>
+		 <td style="height:100px; border: 1px solid black;"></td>
+		 <td style="height:100px; border: 1px solid black;"></td>
+		 <td style="height:100px; border: 1px solid black;"></td>
+
+		</tr>
+
+
+		</table>
+		</div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Report Action -->
+	<template id="report_account_invoice">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="extend_payment_receipt.report_account_invoice_document"/>
+                </t>
+            </t>
+        </template>
+</data>
+
+</odoo>

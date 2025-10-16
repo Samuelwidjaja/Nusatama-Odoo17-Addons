@@ -1,0 +1,13 @@
+<odoo>
+    <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@class='text-muted mb-3']" position="after">
+            <div>
+                <br/><br/><br/><br/><br/><br/><br/><br/>
+
+		<span style="font-weight: bold; text-decoration: underline;">Ismu Prasetyo</span><br/>
+                            <span style="font-weight: bold;">Direktur</span>
+
+            </div>
+        </xpath>
+    </template>
+</odoo>

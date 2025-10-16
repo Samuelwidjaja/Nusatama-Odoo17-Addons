@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="action_report_account_invoice" model="ir.actions.report">
+        <field name="name">Payment Voucher</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">extend_payment_receipt.report_account_invoice</field>
+        <field name="binding_type">report</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+    </record>
+
+    <record id="paperformat_pdf_account_invoice" model="report.paperformat">
+        <field name="name">Paperformat PDF Account Invoice</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">40</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(4,ref('extend_payment_receipt.action_report_account_invoice'))]"></field>
+    </record>
+</odoo>

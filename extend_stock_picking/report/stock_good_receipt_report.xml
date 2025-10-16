@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="stock_good_receipt_document">
+        <!-- Header -->
+        <div class="header" style="width:100%;">
+            <div class="logo" style="width:60%; float:left;">
+            <img t-attf-src="/extend_stock_picking/static/src/image/header.png" style="width:40%;"/>
+            </div>
+            <div style="width:40%; float:right;">
+                <table class="table table-sm table-borderless" style="width:100%;">
+                    <tr style="height :30px;">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>No Tanda Terima</td>
+                        <td>: <span t-field="doc.name"/></td>
+                    </tr>
+                    <tr>
+                        <td>Tgl (Date)</td>
+                        <td>: <span t-field="doc.scheduled_date" t-options="{'format':'dd-MM-yyyy'}"/></td>
+                    </tr>
+
+
+                </table>
+            </div>
+            <!-- Clean Float -->
+            <div style="clear:both;"></div>
+        </div>
+        <!-- End Header -->
+
+        <!-- Page -->
+        <div class="page" style="width:100%;">
+            <style>
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+border: 1px solid black;
+                }
+</style>
+            <br/>
+            <h2 class="text-center">Tanda Terima</h2>
+            <table class="table table-sm table-borderless" style="width:100%;">
+                <tr>
+                    <td style="width:60px;">Dari</td>
+                    <td>: <span t-field="doc.partner_id.display_name"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><span t-field="doc.partner_id.street"/>, <span t-field="doc.partner_id.city"/> <span t-field="doc.partner_id.phone"/></td>
+                </tr>
+            </table>
+            <table class="table table-sm table-bordered" style="width:100%;">
+                <thead class="text-center">
+                    <th>No</th>
+                    <th>Nama Barang (Description)</th>
+                    <th>Jumlah (Qty)</th>
+                    <th>Satuan (Unit)</th>
+                </thead>
+                <tbody>
+                    <t t-if="doc.move_ids">
+                        <t t-set="number" t-value="1"/>
+                        <tr t-foreach="doc.move_ids" t-as="line">
+                            <td class="text-center"><span t-esc="number"/> <t t-set="number" t-value="number + 1"/></td>
+	<td><span t-field="line.product_id.display_name"/></td>
+                            <td class="text-right"><span t-if="line.quantity" t-field="line.quantity"/></td>
+                            <td class="text-center"><span t-field="line.product_uom.name"/></td>
+                </tr>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="4">No Data</td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered mt-3">
+                <tr class="text-center">
+                    <th style="width:25%;">Gudang</th>
+                    <th style="width:25%;">Mengetahui</th>
+                    <th style="width:25%;">Ekspedisi</th>
+                    <th style="width:25%;"></th>
+                </tr>
+                <tr>
+                    <td style="height:70px;"></td>
+                    <td style="height:70px;"></td>
+                    <td style="height:70px;"></td>
+                    <td style="height:70px;"></td>
+                </tr>
+            </table>
+        </div>
+        <!-- End Page -->
+</template>
+
+
+    <template id="stock_picking_good_receipt">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="extend_stock_picking.stock_good_receipt_document"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
+

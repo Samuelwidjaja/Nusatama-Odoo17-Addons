@@ -1,0 +1,25 @@
+<odoo>
+  <template id="custom_document_tax_totals" inherit_id="sale.document_tax_totals">
+
+    <!-- Rename "Untaxed Amount" to "Total Amount", only for Sales Orders -->
+    <xpath expr="//tr[.//span[@name='subtotal_label']]/span[@name='subtotal_label']" position="replace">
+      <t t-if="doc._name == 'sale.order'">
+        <span name="subtotal_label">Total Amount</span>
+      </t>
+      <t t-else="">
+        <span name="subtotal_label"/>
+      </t>
+    </xpath>
+
+    <!-- Hide "Taxes" row only for Sales Orders -->
+    <xpath expr="//tr[.//span[contains(text(), 'Taxes')]]" position="attributes">
+      <attribute name="t-if">doc._name != 'sale.order'</attribute>
+    </xpath>
+
+    <!-- Hide "Total" row only for Sales Orders -->
+    <xpath expr="//tr[.//span[@name='total_label']]" position="attributes">
+      <attribute name="t-if">doc._name != 'sale.order'</attribute>
+    </xpath>
+
+  </template>
+</odoo>
