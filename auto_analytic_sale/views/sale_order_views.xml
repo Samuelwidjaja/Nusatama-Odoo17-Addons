@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_order_form_inherit_analytic_distribution" model="ir.ui.view">
+    <field name="name">sale.order.form.analytic.distribution</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet" position="inside">
+        <group>
+          <div class="o_form_label">
+          </div>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>
