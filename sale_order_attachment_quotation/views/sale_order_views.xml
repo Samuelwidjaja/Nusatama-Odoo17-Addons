@@ -9,7 +9,7 @@
       <!-- Tambahkan section setelah order_line -->
       <xpath expr="//field[@name='order_line']" position="after">
         <group>
-          <separator string="Quotation Attachment"/>
+          <separator string="PO Customer Attachment"/>
 
           <!-- Field many2many_binary langsung di form -->
           <field name="quotation_attachment_ids" widget="many2many_binary"

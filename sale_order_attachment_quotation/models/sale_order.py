@@ -7,8 +7,8 @@ class SaleOrder(models.Model):
     # Many2many untuk simpan file PDF quotation
     quotation_attachment_ids = fields.Many2many(
         'ir.attachment',
-        string='Quotation Attachments',
-        help="Attach up to 2 quotation PDF files."
+        string='Attachments',
+        help="Attach up to 2 PDF files."
     )
 
     def action_confirm(self):
@@ -16,9 +16,9 @@ class SaleOrder(models.Model):
         for order in self:
             attachments = order.quotation_attachment_ids
             if not attachments:
-                raise UserError("You must attach at least one quotation PDF before confirming the order.")
+                raise UserError("PO Customer Attachment is required before confirm.")
             if len(attachments) > 2:
-                raise UserError("You can only attach a maximum of 2 quotation PDF files.")
+                raise UserError("You can only attach a maximum of 2 PDF files.")
         return super(SaleOrder, self).action_confirm()
 
     def action_open_quotation_attachments(self):
