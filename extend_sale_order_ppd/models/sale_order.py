@@ -5,7 +5,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     # Define the customer_po field
-    customer_po = fields.Char(string='Customer PO')
+    customer_po = fields.Char(string='Customer PO', store=True)
     subject = fields.Char(string='Subject')
     def action_confirm(self):
         # Check if customer_po is empty

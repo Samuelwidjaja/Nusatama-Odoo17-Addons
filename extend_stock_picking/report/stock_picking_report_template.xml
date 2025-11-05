@@ -21,7 +21,10 @@
                         <td>Tgl (Date)</td>
                         <td>: <span t-field="doc.scheduled_date" t-options="{'format':'dd-MM-yyyy'}"/></td>
                     </tr>
-                   
+                    <tr>
+                        <td>Customer PO</td>
+                        <td>: <span t-field="doc.customer_po"/></td>
+                    </tr>                   
                     
                 </table>
             </div>
@@ -52,7 +55,7 @@ border: 1px solid black;
             <table class="table table-sm table-bordered" style="width:100%;">
                 <thead class="text-center">
                     <th>No</th>
-                    <th>Part NUmber</th>
+                    <th>Part Number</th>
                     <th>Nama Barang</th>
                     <th>Jumlah (Qty)</th>
                     <th>Satuan (Unit)</th>

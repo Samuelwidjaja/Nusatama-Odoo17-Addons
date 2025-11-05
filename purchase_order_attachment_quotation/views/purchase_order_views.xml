@@ -11,7 +11,7 @@
           <separator string="Quotation Attachment"/>
           <field name="quotation_attachment_ids"
                  widget="many2many_binary"
-                 options="{'accepted_file_extensions': ['pdf']}"
+                 options="{'acceptedFileExtensions': ['pdf']}"
                  placeholder="Upload up to 2 PDF files here..."/>
         </group>
       </xpath>

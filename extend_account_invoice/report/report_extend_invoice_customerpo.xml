@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_invoice_document_add_customer_po" inherit_id="account.report_invoice_document">
+
+        <!-- Tambahkan setelah blok Tax ID (id="partner_vat_address_same_as_shipping" atau lainnya) -->
+        <xpath expr="//div[@id='partner_vat_address_same_as_shipping']" position="after">
+            <t t-if="o.customer_po">
+                <div>
+                    <t>No PO:</t>
+                    <span t-field="o.customer_po"/>
+                </div>
+            </t>
+        </xpath>
+
+        <!-- Jika tipe alamat berbeda (kadang pakai id lain) -->
+        <xpath expr="//div[@id='partner_vat_address_not_same_as_shipping']" position="after">
+            <t t-if="o.customer_po">
+                <div>
+                    <t>No PO:</t>
+                    <span t-field="o.customer_po"/>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@id='partner_vat_no_shipping']" position="after">
+            <t t-if="o.customer_po">
+                <div>
+                    <t>No PO:</t>
+                    <span t-field="o.customer_po"/>
+                </div>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
