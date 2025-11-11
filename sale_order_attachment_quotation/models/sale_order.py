@@ -1,5 +1,7 @@
-from odoo import models, fields
+
+from odoo import models, fields, api
 from odoo.exceptions import UserError
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -11,14 +13,26 @@ class SaleOrder(models.Model):
         help="Attach up to 2 PDF files."
     )
 
+#    @api.model
+#    def create(self, vals):
+#        """Perbaikan bug Odoo:        """
+#        records = super(SaleOrder, self).create(vals)
+#        for rec in records:
+#            if rec.quotation_attachment_ids:
+#                rec.quotation_attachment_ids.write({
+#                    'res_model': self._name,
+#                    'res_id': rec.id
+#                })
+#        return records
+
     def action_confirm(self):
         """Validasi jumlah file quotation sebelum konfirmasi"""
         for order in self:
             attachments = order.quotation_attachment_ids
             if not attachments:
-                raise UserError("PO Customer Attachment is required before confirm.")
+                raise UserError("PO Customer Attachment is required before confirming the sale order.")
             if len(attachments) > 2:
-                raise UserError("You can only attach a maximum of 2 PDF files.")
+                raise UserError("You can only attach a maximum of 2 files.")
         return super(SaleOrder, self).action_confirm()
 
     def action_open_quotation_attachments(self):
@@ -32,7 +46,7 @@ class SaleOrder(models.Model):
             'domain': [
                 ('res_model', '=', 'sale.order'),
                 ('res_id', '=', self.id),
-                ('description', '=', 'quotation_attachment')
+                ('description', '=', 'quotation_attachment'),
             ],
             'context': {
                 'default_res_model': 'sale.order',
